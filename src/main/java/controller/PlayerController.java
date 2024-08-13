@@ -119,12 +119,13 @@ public class PlayerController {
     @GetMapping("/compare")
     public ResponseEntity<Map<String, Map<String, Double>>> comparePlayers(
             @RequestParam Long playerId1,
-            @RequestParam Long playerId2) {
+            @RequestParam Long playerId2,
+            @RequestParam String category) {
         Player player1 = playerService.findById(playerId1)
                 .orElseThrow(() -> new ResourceNotFoundException("Player not found with id " + playerId1));
         Player player2 = playerService.findById(playerId2)
                 .orElseThrow(() -> new ResourceNotFoundException("Player not found with id " + playerId2));
-        Map<String, Map<String, Double>> comparison = playerService.comparePlayers(player1, player2);
+        Map<String, Map<String, Double>> comparison = playerService.comparePlayers(player1, player2, category);
         return new ResponseEntity<>(comparison, HttpStatus.OK);
     }
 }

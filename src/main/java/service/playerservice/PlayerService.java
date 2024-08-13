@@ -17,6 +17,8 @@ public interface PlayerService {
      */
     List<Player> getPlayersMatchingCriteria(MatchCriteria criteria);
 
+    List<Player> findBestMatches(MatchCriteria stats);
+
     /**
      * Calculate the match percentage of a player against given criteria.
      *
@@ -33,7 +35,8 @@ public interface PlayerService {
      * @param player2 The second player to compare.
      * @return A map containing the comparison results of their statistics.
      */
-    Map<String, Map<String, Double>> comparePlayers(Player player1, Player player2);
+
+    Map<String, Map<String, Double>> comparePlayers(Player player1, Player player2, String category);
 
     /**
      * Find a player by their unique ID.
