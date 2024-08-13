@@ -1,5 +1,6 @@
 package controller;
 
+import criteria.MatchCriteria;
 import entity.Player;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

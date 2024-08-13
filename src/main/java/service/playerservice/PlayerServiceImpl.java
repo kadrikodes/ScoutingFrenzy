@@ -1,5 +1,6 @@
 package service.playerservice;
 
+import criteria.MatchCriteria;
 import dataaccess.PlayerRepository;
 import entity.Player;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package service.playerservice;
 
+import criteria.MatchCriteria;
 import entity.Player;
 
 import java.util.List;
