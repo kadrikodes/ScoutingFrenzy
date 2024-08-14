@@ -5,6 +5,7 @@ import dataaccess.PlayerRepository;
 import entity.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import service.FootballApiService;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,10 +16,21 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @Autowired
+    private FootballApiService footballApiService;
+
     @Override
     public List<Player> getPlayersMatchingCriteria(MatchCriteria criteria) {
-        return playerRepository.findAll().stream()
-                .filter(player -> calculateMatchPercentage(player, criteria) >= 70.0) // Example threshold
+        List<Player> players = playerRepository.findAll();
+
+        // Optionally fetch additional players from the API based on criteria
+        if (criteria.getSearchFromApi()) { // Assuming criteria has a flag to determine this
+            Player[] apiPlayers = footballApiService.searchPlayersByName(criteria.getPlayerName());
+            players.addAll(Arrays.asList(apiPlayers));
+        }
+
+        return players.stream()
+                .filter(player -> calculateMatchPercentage(player, criteria) >= 70.0)
                 .collect(Collectors.toList());
     }
 
@@ -359,7 +371,10 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player updatePlayerStats(Player player) {
-        // Ensure the player exists and update their stats
+        Player updatedStats = footballApiService.getPlayerStats(player.getId());
+        player.setGoals(updatedStats.getGoals());
+        player.setAssists(updatedStats.getAssists());
+        // Update all relevant stats...
         return playerRepository.save(player);
     }
 

@@ -88,4 +88,7 @@ public class MatchCriteria {
     private Double minExpectedGoalsChain;
     private Integer minBallRecoveries;
     private Integer maxPossessionLost;
+
+    private String playerName;
+    private Boolean searchFromApi;
 }
